@@ -1,4 +1,4 @@
-/* @file HelloKeypad.pde
+/* 
 || @version 4.0
 || @author Severin Hersche
 || @contact severin.hersche@ubs.com
