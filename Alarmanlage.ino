@@ -9,36 +9,43 @@
 */
 #include <Keypad.h>
 
-const int INPUT_MAX = 4;
+const int INPUT_MAX = 4; //passwort eingabe auf 4 festgelegt
 
-boolean isTriggered = false;
+boolean isTriggered = false; //ist um zu ueberpruefen ob der Bewegungsensor los ging
 
 //Diese sind für die RGB Lampe
 int redLightPin = 9;
 int greenLightPin = 10;
 int blueLightPin = 11;
 
+//für den Bewegungsensor
 int motionSensorOutput = A0;
-int redLight = A5;
-int blueLight = A1;
+
+//Hier ist der Bewegungsensor verbunden
+int motionSensorPin = 13;
+
+//für den piezo buzzer
 int soundPin = A3;
 
+//Das sind die einfachen Lichten für das blaurot
+int redLight = A5;
+int blueLight = A1;
+
+//Das wird gebrauch um das balu rotlicht zu blinken
 int ledState = LOW;
 unsigned long previousMillis = 0;
 const long interval = 1000;
 
-char passwortInput[4];
-char password[4] = {
-  '1',
-  '5',
-  'D',
-  'B'
-};
+//Hier wird die Passwort eingabe gespeichert
+char passwortInput[INPUT_MAX];
+//Hier ist das Passwort definiert
+char password[INPUT_MAX] = {'1','5','D','B'};
 
+//Hier zaehlt man die eingabe des Passworts
 int inputCount = 0;
 
 const byte ROWS = 4; //four rows
-const byte COLS = 4; //three columns
+const byte COLS = 4; //four columns
 char keys[ROWS][COLS] = {
   {'1','2','3','A'},
   {'4','5','6','B'},
@@ -47,28 +54,31 @@ char keys[ROWS][COLS] = {
 };
 byte rowPins[ROWS] = {12,8,7,6}; //connect to the row pinouts of the keypad
 byte colPins[COLS] = {5,4,3,2}; //connect to the column pinouts of the keypad
-
+//Hier wird das keypad eingerichted
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 
 void setup() {
-
+  //Die pins werden hier gesetuped 
   setUpPins();
 
+  //Hier wird das RGB licht gesetuped 
   setUpRGB();
   Serial.begin(9600);
 }
 
 void loop() {
-  if (isTriggered) {
-    imitatePolice();
-    tone(soundPin, 4000);
-  }
-
-  int motionSensor = digitalRead(13);
+  int motionSensor = digitalRead(motionSensorPin);
   if (motionSensor && !isTriggered) {
     isTriggered = true;
   }
+  //Hier wird das Blaulicht ausgegeben, wenn der Bewegungsensor ausgelöst wird
   digitalWrite(motionSensorOutput, motionSensor);
+
+  if (isTriggered) {
+    //wenn der Bewegnungsensor eine Bewegung bemerkt wird das Blincken und der ton ausgegeben
+    imitatePolice();
+    tone(soundPin, 4000);
+  }
 
   char key = keypad.getKey();
   if (key) {
