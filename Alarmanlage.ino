@@ -82,30 +82,34 @@ void loop() {
 
   char key = keypad.getKey();
   if (key) {
+    //Wenn der input = # ist wird überprüft, ob die eingabe korrekt war
     if (key == '#') {
       if (strncmp(passwortInput, password, sizeof(passwortInput)) == 0) {
+        //Wenn ja wird das Grüne licht gezeigt
         digitalWrite(greenLightPin, LOW);
         delay(4000);
         digitalWrite(greenLightPin, HIGH);
-
+        //Und der ausgelöste Alarm ausgestellt
         noTone(soundPin);
         stopPolice();
         isTriggered = false;
         resetInput();
 
       } else {
+        //Wenn die eingabe nicht korrekt war wird das Rotelicht gezeigt
         digitalWrite(redLightPin, LOW);
         delay(1000);
         digitalWrite(redLightPin, HIGH);
+        //der Input wird zurückgesetzt
         resetInput();
       }
     } else if (inputCount < INPUT_MAX) {
+      //Hier wird überprüft, ob die eingabe unter 4 Zeichen ist und wenn ja wird sie gespeichert
       passwortInput[inputCount] = key;
       inputCount += 1;
     } else {
       resetInput();
       showError();
-
     }
   }
 }
@@ -135,6 +139,7 @@ void resetInput() {
   inputCount = 0;
   memset(passwortInput, 0, sizeof passwortInput);
 }
+//Das blinken wird eingestellt
 void imitatePolice() {
 
   unsigned long currentMillis = millis();
@@ -152,7 +157,7 @@ void imitatePolice() {
     digitalWrite(blueLight, !ledState);
   }
 }
-
+//das Blinken wird ausgestellt
 void stopPolice() {
   digitalWrite(redLight, LOW);
   digitalWrite(blueLight, LOW);
