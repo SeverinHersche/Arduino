@@ -4,7 +4,7 @@
 || @contact severin.hersche@ubs.com
 ||
 || @description
-|| | A little password input thing.
+|| | Eine kleine Alarmanlage die mit einem Bewegungsesnor funktioniert.
 || #
 */
 #include <Keypad.h>
