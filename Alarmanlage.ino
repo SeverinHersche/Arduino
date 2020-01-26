@@ -14,9 +14,9 @@ const int INPUT_MAX = 4; //passwort eingabe auf 4 festgelegt
 boolean isTriggered = false; //ist um zu ueberpruefen ob der Bewegungsensor los ging
 
 //Diese sind für die RGB Lampe
-int redLightPin = 9;
-int greenLightPin = 10;
-int blueLightPin = 11;
+int redLightPin = 10;
+int greenLightPin = 11;
+int blueLightPin = 12;
 
 //für den Bewegungsensor
 int motionSensorOutput = A0;
@@ -52,7 +52,7 @@ char keys[ROWS][COLS] = {
   {'7','8','9','C'},
   {'*','0','#','D'}
 };
-byte rowPins[ROWS] = {12,8,7,6}; //connect to the row pinouts of the keypad
+byte rowPins[ROWS] = {9,8,7,6}; //connect to the row pinouts of the keypad
 byte colPins[COLS] = {5,4,3,2}; //connect to the column pinouts of the keypad
 //Hier wird das keypad eingerichted
 Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
